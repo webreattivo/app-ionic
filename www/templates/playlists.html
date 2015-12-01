@@ -1,0 +1,16 @@
+<ion-view view-title="Playlists">
+  <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="playlist in playlists" href="#/app/playlists/{{playlist.id}}">
+        {{playlist.title}}
+      </ion-item>
+    </ion-list>
+
+    <h3>{{token}}</h3>
+
+    <button class="button button-positive" ng-click="toCopy()">
+      Copy Token
+    </button>
+
+  </ion-content>
+</ion-view>
