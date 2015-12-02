@@ -47,7 +47,7 @@ angular.module('starter.controllers', [])
         }
     })
 
-    .controller('PlaylistsCtrl', function ($scope, $ionicPlatform, $cordovaClipboard) {
+    .controller('PlaylistsCtrl', function ($scope, $ionicPlatform, $cordovaClipboard, $cordovaOauth) {
         $scope.playlists = [
             {title: 'Reggae', id: 1},
             {title: 'Chill', id: 2},
@@ -96,7 +96,18 @@ angular.module('starter.controllers', [])
         $scope.toCopy = function () {
             console.log($scope.token);
             $cordovaClipboard.copy($scope.token);
-        }
+        };
+
+        $scope.facebookLogin = function() {
+            $cordovaOauth.facebook("1520497348260580", ["email"]).then(function(result) {
+                console.log("success");
+                console.log(result);
+            }, function(error) {
+                // error
+                console.log("error");
+                console.log(error);
+            });
+        };
 
     })
 
