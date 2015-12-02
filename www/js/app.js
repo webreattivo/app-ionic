@@ -22,37 +22,34 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'starter.controllers',
         });
     })
 
-    .config(function ($stateProvider, $urlRouterProvider) {
+    .config(function ($stateProvider, $urlRouterProvider, USER_ROLES) {
         $stateProvider
 
-            .state('app', {
+            .state('login', {
+                url: '/login',
+                templateUrl: 'templates/login.html',
+                controller: 'LoginCtrl'
+            })
+
+            .state('main', {
                 url: '/app',
                 abstract: true,
                 templateUrl: 'templates/menu.html',
                 controller: 'AppCtrl'
             })
-
-            .state('app.login', {
-                url: '/login',
-                views: {
-                    'menuContent': {
-                        templateUrl: 'templates/login.html',
-                        controller: 'LoginCtrl'
-                    }
-                }
-            })
-
-            .state('app.dashboard', {
+            .state('main.dashboard', {
                 url: '/dashboard',
                 views: {
                     'menuContent': {
                         templateUrl: 'templates/dashboard.html',
                         controller: 'DashCtrl'
                     }
+                },
+                data: {
+                    authorizedRoles: [USER_ROLES.admin]
                 }
             })
-
-            .state('app.push-notification', {
+            .state('main.push-notification', {
                 url: '/push-notification',
                 views: {
                     'menuContent': {
@@ -63,5 +60,9 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'starter.controllers',
             });
 
         // if none of the above states are matched, use this as the fallback
-        $urlRouterProvider.otherwise('/app/login');
+        //$urlRouterProvider.otherwise('/login');
+        $urlRouterProvider.otherwise(function ($injector, $location) {
+            var $state = $injector.get("$state");
+            $state.go("login");
+        });
     });

@@ -1,0 +1,5 @@
+angular.module('starter')
+
+    .constant('FACEBOOK', {
+        appId: 'your-app-id-here'
+    });

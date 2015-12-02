@@ -4,13 +4,13 @@ angular.module('starter.controllers', [])
 
     })
 
-    .controller('LoginCtrl', function ($scope, $state, $ionicPopup, LoginService, $cordovaOauth) {
+    .controller('LoginCtrl', function ($scope, $state, $ionicPopup, LoginService, $cordovaOauth, FACEBOOK) {
 
         $scope.loginData = {};
 
         $scope.doLogin = function() {
             LoginService.loginUser($scope.loginData.username, $scope.loginData.password).success(function(data) {
-                $state.go('app.dashboard');
+                $state.go('main.dashboard');
             }).error(function(data) {
                 $ionicPopup.alert({
                     title: 'Login failed!',
@@ -20,13 +20,10 @@ angular.module('starter.controllers', [])
         };
 
         $scope.facebookLogin = function() {
-            $cordovaOauth.facebook("1520497348260580", ["email"]).then(function(result) {
-                console.log("success");
+            $cordovaOauth.facebook(FACEBOOK.appId, ["email"]).then(function(result) {
                 console.log(result);
-                $state.go('app.dashboard');
+                $state.go('main.dashboard');
             }, function(error) {
-                // error
-                console.log("error");
                 console.log(error);
             });
         };
