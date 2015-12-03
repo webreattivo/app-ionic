@@ -1,23 +1,36 @@
 angular.module('starter.controllers', [])
 
-    .controller('AppCtrl', function ($scope, $ionicModal, $timeout, $ionicPopup, $state) {
+    .controller('AppCtrl', function ($scope, $rootScope, $state, $ionicPopup, AuthService, AUTH_EVENTS) {
+        $scope.username = AuthService.username();
+
+        $scope.isAuthenticated = AuthService.isAuthenticated();
+
+        $scope.setCurrentUsername = function(name) {
+            $scope.username = name;
+        };
+
+        $scope.logout = function() {
+            AuthService.logout();
+            $state.go('main.login');
+        };
 
     })
 
-    .controller('LoginCtrl', function ($scope, $state, $ionicPopup, LoginService, $cordovaOauth, FACEBOOK) {
+    .controller('LoginCtrl', function ($scope, $state, $location, $ionicPopup, AuthService, $cordovaOauth, FACEBOOK) {
 
-        $scope.loginData = {};
+        $scope.data = {};
 
-        $scope.doLogin = function() {
-            LoginService.loginUser($scope.loginData.username, $scope.loginData.password).success(function(data) {
-                $state.go('main.dashboard');
-            }).error(function(data) {
-                $ionicPopup.alert({
+        $scope.login = function(data) {
+            AuthService.login(data.username, data.password).then(function(authenticated) {
+                $state.go('main.dashboard', {}, {reload: true});
+                $scope.setCurrentUsername(data.username);
+            }, function(err) {
+                var alertPopup = $ionicPopup.alert({
                     title: 'Login failed!',
                     template: 'Please check your credentials!'
                 });
             });
-        };
+        }
 
         $scope.facebookLogin = function() {
             $cordovaOauth.facebook(FACEBOOK.appId, ["email"]).then(function(result) {
@@ -29,8 +42,36 @@ angular.module('starter.controllers', [])
         };
     })
 
-    .controller('DashCtrl', function($scope) {
+    .controller('DashCtrl', function($scope, $state, $http, $ionicPopup, AuthService) {
 
+        $scope.performValidRequest = function() {
+            $http.get('http://localhost:8100/valid').then(
+                function(result) {
+                    $scope.response = result;
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'Valid!',
+                        template: 'You made a valid request'
+                    });
+                });
+        };
+
+        $scope.performUnauthorizedRequest = function() {
+            $http.get('http://localhost:8100/notauthorized').then(
+                function(result) {
+                    // No result here..
+                }, function(err) {
+                    $scope.response = err;
+                });
+        };
+
+        $scope.performInvalidRequest = function() {
+            $http.get('http://localhost:8100/notauthenticated').then(
+                function(result) {
+                    // No result here..
+                }, function(err) {
+                    $scope.response = err;
+                });
+        };
     })
 
     .controller('PushCtrl', function($scope, $ionicPlatform, $cordovaClipboard) {
@@ -73,4 +114,16 @@ angular.module('starter.controllers', [])
             console.log($scope.token);
             $cordovaClipboard.copy($scope.token);
         };
+    })
+
+    .controller('UserCtrl', function($scope, $ionicPlatform, $cordovaClipboard) {
+
+    })
+
+    .controller('AdminCtrl', function($scope, $ionicPlatform, $cordovaClipboard) {
+
+    })
+
+    .controller('TestCtrl', function($scope, $ionicPlatform, $cordovaClipboard) {
+
     });

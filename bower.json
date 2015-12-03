@@ -6,6 +6,7 @@
     "ionic-platform-web-client": "~0.2.1"
   },
   "dependencies": {
-    "ng-cordova-oauth": "~0.1.4"
+    "ng-cordova-oauth": "~0.1.4",
+    "angular-mocks": "~1.4.8"
   }
 }

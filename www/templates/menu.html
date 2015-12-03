@@ -1,7 +1,7 @@
 <ion-side-menus enable-menu-with-back-views="false">
     <ion-side-menu-content>
         <ion-nav-bar class="bar-stable">
-            <ion-nav-back-button>
+            <ion-nav-back-button hide-back-button="true">
             </ion-nav-back-button>
 
             <ion-nav-buttons side="left">
@@ -18,13 +18,22 @@
         </ion-header-bar>
         <ion-content>
             <ion-list>
+                <ion-item menu-close href="#/app/login">
+                    Login
+                </ion-item>
                 <ion-item menu-close href="#/app/dashboard">
                     Dashboard
+                </ion-item>
+                <ion-item menu-close href="#/app/user">
+                    User Area
+                </ion-item>
+                <ion-item menu-close href="#/app/admin">
+                    Admin Area
                 </ion-item>
                 <ion-item menu-close href="#/app/push-notification">
                     Push Notification
                 </ion-item>
-                <ion-item menu-close href="#">
+                <ion-item menu-close ng-click="logout()" ng-show="isAuthenticated">
                     Logout
                 </ion-item>
             </ion-list>
