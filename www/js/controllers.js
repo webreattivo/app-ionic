@@ -16,7 +16,7 @@ angular.module('starter.controllers', [])
 
     })
 
-    .controller('LoginCtrl', function ($scope, $state, $location, $ionicPopup, AuthService, $cordovaOauth, FACEBOOK) {
+    .controller('LoginCtrl', function ($scope, $state, $http, $ionicPopup, AuthService, $cordovaOauth, FACEBOOK, API_ENDPOINTS) {
 
         $scope.data = {};
 
@@ -35,6 +35,19 @@ angular.module('starter.controllers', [])
         $scope.facebookLogin = function() {
             $cordovaOauth.facebook(FACEBOOK.appId, ["email"]).then(function(result) {
                 console.log(result);
+                AuthService.storeUserCredentials(result.access_token);
+
+                $http({
+                    url: API_ENDPOINTS.fb+'/me',
+                    method: "GET",
+                    params: {
+                        fields: 'name,email',
+                        access_token: result.access_token
+                    }
+                }).success(function(data) {
+                    $scope.setCurrentUsername(data.name);
+                });
+
                 $state.go('main.dashboard');
             }, function(error) {
                 console.log(error);

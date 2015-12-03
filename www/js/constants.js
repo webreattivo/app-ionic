@@ -9,4 +9,9 @@ angular.module('starter')
     .constant('USER_ROLES', {
         admin: 'admin_role',
         user: 'user_role'
+    })
+
+    .constant('API_ENDPOINTS', {
+        fb: 'https://graph.facebook.com/v2.5',
     });
+

@@ -26,8 +26,7 @@ angular.module('starter.services',[])
 
             if (username == 'admin') {
                 role = USER_ROLES.admin
-            }
-            if (username == 'user') {
+            } else {
                 role = USER_ROLES.user
             }
 
