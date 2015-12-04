@@ -105,7 +105,13 @@ angular.module('starter.controllers', [])
         });
     })
 
-    .controller('DashCtrl', function($scope, $state, $http, $ionicPopup, AuthService) {
+    .controller('DashCtrl', function($scope, $state, $http, $ionicPopup, $cordovaVibration, AuthService) {
+
+        $scope.vibrate = function() {
+            // Vibrate 100ms
+            $cordovaVibration.vibrate(100);
+        }
+
 
         $scope.performValidRequest = function() {
             $http.get('http://localhost:8100/valid').then(

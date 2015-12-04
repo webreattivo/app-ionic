@@ -11,6 +11,11 @@
                 <h3 class="title">Welcome {{getUsername() ? getUsername() : 'guest'}}!</h3>
 
                 <br><br><br>
+
+                <button class="button button-full button-assertive" ng-click="vibrate()">
+                    Vibration
+                </button>
+
                 <button class="button button-full button-positive" ng-click="performValidRequest()">
                     Make Valid Request
                 </button>
