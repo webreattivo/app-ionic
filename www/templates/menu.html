@@ -19,25 +19,25 @@
         <ion-content>
             <ion-list>
                 <ion-item menu-close href="#/app/login" ng-hide="isAuthenticated()">
-                    Login
+                    <i class="icon ion-log-in"></i> Login
                 </ion-item>
                 <ion-item menu-close href="#/app/dashboard">
-                    Dashboard
+                    <i class="icon ion-home"></i> Dashboard
                 </ion-item>
                 <ion-item menu-close href="#/app/user">
-                    User Area
+                    <i class="icon ion-person"></i> User Area
                 </ion-item>
                 <ion-item menu-close href="#/app/admin">
-                    Admin Area
+                    <i class="icon ion-locked"></i> Admin Area
                 </ion-item>
                 <ion-item menu-close href="#/app/push-notification">
-                    Push Notification
+                    <i class="icon ion-ios-settings"></i> Push Notification
                 </ion-item>
                 <ion-item menu-close href="#/app/charts">
-                    Charts
+                    <i class="icon ion-speedometer"></i> Charts
                 </ion-item>
                 <ion-item menu-close ng-click="logout()" ng-show="isAuthenticated()">
-                    Logout
+                    <i class="icon ion-log-out"></i> Logout
                 </ion-item>
             </ion-list>
         </ion-content>
