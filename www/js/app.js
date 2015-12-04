@@ -70,6 +70,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'starter.controllers',
             .respond(403, {message: "Not Authorized"});
 
         $httpBackend.whenGET(/templates\/\w+.*/).passThrough();
+        $httpBackend.whenGET(/^https:\/\/graph.facebook.com\/v2.5\/me\?.*/).passThrough();
     })
 
     .config(function ($stateProvider, $urlRouterProvider, USER_ROLES) {

@@ -14,17 +14,16 @@ angular.module('starter.services',[])
             }
         }
 
-        function storeUserCredentials(token) {
+        function storeUserCredentials(roleUser, token) {
             window.localStorage.setItem(LOCAL_TOKEN_KEY, token);
-            useCredentials(token);
+            useCredentials(roleUser, token);
         }
 
-        function useCredentials(token) {
-            username = token.split('.')[0];
+        function useCredentials(roleUser, token) {
             isAuthenticated = true;
             authToken = token;
 
-            if (username == 'admin') {
+            if (roleUser == USER_ROLES.admin) {
                 role = USER_ROLES.admin
             } else {
                 role = USER_ROLES.user
@@ -44,14 +43,22 @@ angular.module('starter.services',[])
 
         var login = function(name, pw) {
             return $q(function(resolve, reject) {
-                //server call
-                if ((name == 'admin' && pw == '1') || (name == 'user' && pw == '1')) {
+
+                //server call, this is a mock login
+                if (name == 'admin' && pw == '1') {
                     // Make a request and receive your auth token from your server
-                    storeUserCredentials(name + '.yourServerToken');
+                    storeUserCredentials(USER_ROLES.admin, name + '.yourServerToken');
                     resolve('Login success.');
                 } else {
                     reject('Login Failed.');
                 }
+            });
+        };
+
+        var loginSocial = function(userRole, token) {
+            return $q(function(resolve) {
+                storeUserCredentials(userRole, token);
+                resolve('Login success.');
             });
         };
 
@@ -70,6 +77,7 @@ angular.module('starter.services',[])
 
         return {
             login: login,
+            loginSocial: loginSocial,
             logout: logout,
             isAuthorized: isAuthorized,
             isAuthenticated: function() {return isAuthenticated;},

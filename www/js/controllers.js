@@ -1,6 +1,7 @@
 angular.module('starter.controllers', [])
 
     .controller('AppCtrl', function ($scope, $rootScope, $state, $ionicPopup, AuthService, AUTH_EVENTS) {
+
         $scope.username = AuthService.username();
 
         $scope.isAuthenticated = AuthService.isAuthenticated();
@@ -16,7 +17,17 @@ angular.module('starter.controllers', [])
 
     })
 
-    .controller('LoginCtrl', function ($scope, $state, $http, $ionicPopup, AuthService, $cordovaOauth, FACEBOOK, API_ENDPOINTS) {
+    .controller('LoginCtrl', function (
+        $scope,
+        $state,
+        $http,
+        $ionicPlatform,
+        $ionicPopup,
+        $cordovaOauth,
+        AuthService,
+        FACEBOOK,
+        API_ENDPOINTS,
+        USER_ROLES) {
 
         $scope.data = {};
 
@@ -30,29 +41,57 @@ angular.module('starter.controllers', [])
                     template: 'Please check your credentials!'
                 });
             });
-        }
-
-        $scope.facebookLogin = function() {
-            $cordovaOauth.facebook(FACEBOOK.appId, ["email"]).then(function(result) {
-                console.log(result);
-                AuthService.storeUserCredentials(result.access_token);
-
-                $http({
-                    url: API_ENDPOINTS.fb+'/me',
-                    method: "GET",
-                    params: {
-                        fields: 'name,email',
-                        access_token: result.access_token
-                    }
-                }).success(function(data) {
-                    $scope.setCurrentUsername(data.name);
-                });
-
-                $state.go('main.dashboard');
-            }, function(error) {
-                console.log(error);
-            });
         };
+
+        $ionicPlatform.ready(function () {
+
+            $scope.facebookLogin = function() {
+                $cordovaOauth.facebook(FACEBOOK.appId, ["email"]).then(function(result) {
+
+                    AuthService.loginSocial(USER_ROLES.user, result.access_token);
+
+                    $http({
+                        url: API_ENDPOINTS.fb+'/me',
+                        method: "GET",
+                        params: {
+                            fields: 'name,email,picture',
+                            access_token: result.access_token
+                        }
+                    }).then(function successCallback(response) {
+
+                        Ionic.io();
+                        var push = new Ionic.Push();
+
+                        var user = Ionic.User.current();
+                        var callback = function (pushToken) {
+                            $scope.token = pushToken.token;
+
+                            if (!user.id) {
+                                user.id = Ionic.User.anonymousId();
+                            }
+
+                            user.set('name', response.data.name);
+                            user.set('email', response.data.email);
+                            user.set('role', USER_ROLES.user);
+                            user.set('image', response.data.picture.data.url);
+                            user.addPushToken(pushToken);
+                            user.save();
+                        };
+
+                        push.register(callback);
+
+                        $scope.setCurrentUsername(response.data.name);
+                        $state.go('main.dashboard');
+
+                    }, function errorCallback(response) {
+                        console.log(response);
+                    });
+
+                }, function(error) {
+                    console.log(error);
+                });
+            };
+        });
     })
 
     .controller('DashCtrl', function($scope, $state, $http, $ionicPopup, AuthService) {
