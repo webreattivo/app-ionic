@@ -2,52 +2,31 @@ angular.module('starter.services',[])
 
     .service('AuthService', function($q, $http, USER_ROLES) {
         var LOCAL_TOKEN_KEY = 'token';
-        var username = '';
-        var isAuthenticated = false;
-        var role = '';
-        var authToken;
 
-        function loadUserCredentials() {
-            var token = window.localStorage.getItem(LOCAL_TOKEN_KEY);
-            if (token) {
-                useCredentials(token);
-            }
-        }
-
-        function storeUserCredentials(roleUser, token) {
+        function storeUserCredentials(roleUser, name, token) {
             window.localStorage.setItem(LOCAL_TOKEN_KEY, token);
-            useCredentials(roleUser, token);
-        }
-
-        function useCredentials(roleUser, token) {
-            isAuthenticated = true;
-            authToken = token;
-
-            if (roleUser == USER_ROLES.admin) {
-                role = USER_ROLES.admin
-            } else {
-                role = USER_ROLES.user
-            }
-
+            window.localStorage.setItem('username', name);
+            window.localStorage.setItem('isAuthenticated', true);
+            window.localStorage.setItem('role', roleUser);
             // Set the token as header for your requests!
             $http.defaults.headers.common['X-Auth-Token'] = token;
         }
 
         function destroyUserCredentials() {
-            authToken = undefined;
-            username = '';
-            isAuthenticated = false;
-            $http.defaults.headers.common['X-Auth-Token'] = undefined;
             window.localStorage.removeItem(LOCAL_TOKEN_KEY);
+            window.localStorage.removeItem('username');
+            window.localStorage.removeItem('isAuthenticated');
+            window.localStorage.removeItem('role');
+            // unset the token as header for your requests!
+            $http.defaults.headers.common['X-Auth-Token'] = undefined;
         }
 
         var login = function(name, pw) {
             return $q(function(resolve, reject) {
-
                 //server call, this is a mock login
                 if (name == 'admin' && pw == '1') {
                     // Make a request and receive your auth token from your server
-                    storeUserCredentials(USER_ROLES.admin, name + '.yourServerToken');
+                    storeUserCredentials(USER_ROLES.admin, name, '.yourServerToken');
                     resolve('Login success.');
                 } else {
                     reject('Login Failed.');
@@ -55,9 +34,9 @@ angular.module('starter.services',[])
             });
         };
 
-        var loginSocial = function(userRole, token) {
+        var loginSocial = function(name, token) {
             return $q(function(resolve) {
-                storeUserCredentials(userRole, token);
+                storeUserCredentials(USER_ROLES.user, name, token);
                 resolve('Login success.');
             });
         };
@@ -66,23 +45,33 @@ angular.module('starter.services',[])
             destroyUserCredentials();
         };
 
+        var getUsername = function () {
+            return window.localStorage.getItem('username');
+        }
+
+        var isAuthenticated = function() {
+            return window.localStorage.getItem('isAuthenticated');
+        }
+
+        var getRole = function() {
+            return window.localStorage.getItem('role');
+        }
+
         var isAuthorized = function(authorizedRoles) {
             if (!angular.isArray(authorizedRoles)) {
                 authorizedRoles = [authorizedRoles];
             }
-            return (isAuthenticated && authorizedRoles.indexOf(role) !== -1);
+            return (isAuthenticated() && authorizedRoles.indexOf(getRole()) !== -1);
         };
-
-        loadUserCredentials();
 
         return {
             login: login,
             loginSocial: loginSocial,
             logout: logout,
             isAuthorized: isAuthorized,
-            isAuthenticated: function() {return isAuthenticated;},
-            username: function() {return username;},
-            role: function() {return role;}
+            isAuthenticated: isAuthenticated,
+            getUsername: getUsername,
+            role: getRole
         };
     })
 

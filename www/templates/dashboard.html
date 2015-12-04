@@ -1,12 +1,14 @@
 <ion-view view-title="Dashboard" name="dashboard-view" cache-view="false">
     <ion-nav-buttons side="right">
-        <button class="button icon-left ion-log-out button-stable" ng-click="logout()">Logout</button>
+        <button class="button icon-left ion-log-out button-stable" ng-click="logout()" ng-show="isAuthenticated()">
+            Logout
+        </button>
     </ion-nav-buttons>
 
     <ion-content class="padding">
         <div class="row">
             <div class="col text-center">
-                <h3 class="title">Welcome {{username ? username : 'guest'}}!</h3>
+                <h3 class="title">Welcome {{getUsername() ? getUsername() : 'guest'}}!</h3>
 
                 <br><br><br>
                 <button class="button button-full button-positive" ng-click="performValidRequest()">

@@ -1,20 +1,29 @@
 angular.module('starter.controllers', [])
 
-    .controller('AppCtrl', function ($scope, $rootScope, $state, $ionicPopup, AuthService, AUTH_EVENTS) {
+    .controller('AppCtrl', function (
+        $scope,
+        $rootScope,
+        $state,
+        $ionicPopup,
+        $ionicHistory,
+        AuthService,
+        AUTH_EVENTS) {
 
-        $scope.username = AuthService.username();
+        $scope.getUsername = function() {
+            return AuthService.getUsername();
+        };
 
-        $scope.isAuthenticated = AuthService.isAuthenticated();
-
-        $scope.setCurrentUsername = function(name) {
-            $scope.username = name;
+        $scope.isAuthenticated = function() {
+            return AuthService.isAuthenticated();
         };
 
         $scope.logout = function() {
             AuthService.logout();
+            $ionicHistory.nextViewOptions({
+                disableBack: true
+            });
             $state.go('main.login');
         };
-
     })
 
     .controller('LoginCtrl', function (
@@ -23,18 +32,19 @@ angular.module('starter.controllers', [])
         $http,
         $ionicPlatform,
         $ionicPopup,
+        $ionicHistory,
         $cordovaOauth,
         AuthService,
         FACEBOOK,
         API_ENDPOINTS,
         USER_ROLES) {
 
-        $scope.data = {};
-
         $scope.login = function(data) {
             AuthService.login(data.username, data.password).then(function(authenticated) {
+                $ionicHistory.nextViewOptions({
+                    disableBack: true
+                });
                 $state.go('main.dashboard', {}, {reload: true});
-                $scope.setCurrentUsername(data.username);
             }, function(err) {
                 var alertPopup = $ionicPopup.alert({
                     title: 'Login failed!',
@@ -47,8 +57,6 @@ angular.module('starter.controllers', [])
 
             $scope.facebookLogin = function() {
                 $cordovaOauth.facebook(FACEBOOK.appId, ["email"]).then(function(result) {
-
-                    AuthService.loginSocial(USER_ROLES.user, result.access_token);
 
                     $http({
                         url: API_ENDPOINTS.fb+'/me',
@@ -80,7 +88,10 @@ angular.module('starter.controllers', [])
 
                         push.register(callback);
 
-                        $scope.setCurrentUsername(response.data.name);
+                        AuthService.loginSocial(response.data.name, result.access_token);
+                        $ionicHistory.nextViewOptions({
+                            disableBack: true
+                        });
                         $state.go('main.dashboard');
 
                     }, function errorCallback(response) {
