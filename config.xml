@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.ionicframework.myapp253071" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>myApp</name>
+  <name>Ionic Test App</name>
   <description>
-        An Ionic Framework and Cordova project.
+      Ionic Test App
     </description>
-  <author email="hi@ionicframework" href="http://ionicframework.com/">
-      Ionic Framework Team
+  <author email="info@webreattivo.com" href="http://webreattivo.com">
+      WebReattivo
     </author>
   <content src="index.html"/>
   <access origin="*"/>
