@@ -108,9 +108,8 @@ angular.module('starter.controllers', [])
     .controller('DashCtrl', function($scope, $state, $http, $ionicPopup, $cordovaVibration, AuthService) {
 
         $scope.vibrate = function() {
-            // Vibrate 100ms
-            $cordovaVibration.vibrate(100);
-        }
+            $cordovaVibration.vibrate(1000);
+        };
 
 
         $scope.performValidRequest = function() {
