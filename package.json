@@ -27,6 +27,10 @@
       "locator": "https://github.com/VersoSolutions/CordovaClipboard.git",
       "id": "com.verso.cordova.clipboard"
     },
+    {
+      "locator": "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git",
+      "id": "cordova-plugin-x-toast"
+    },
     "cordova-plugin-inappbrowser"
   ],
   "cordovaPlatforms": [

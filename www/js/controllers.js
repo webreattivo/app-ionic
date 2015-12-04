@@ -34,6 +34,7 @@ angular.module('starter.controllers', [])
         $ionicPopup,
         $ionicHistory,
         $cordovaOauth,
+        $cordovaToast,
         AuthService,
         FACEBOOK,
         API_ENDPOINTS,
@@ -41,6 +42,7 @@ angular.module('starter.controllers', [])
 
         $scope.login = function(data) {
             AuthService.login(data.username, data.password).then(function(authenticated) {
+                $cordovaToast.showLongBottom('Logged with local system');
                 $ionicHistory.nextViewOptions({
                     disableBack: true
                 });
@@ -89,6 +91,7 @@ angular.module('starter.controllers', [])
                         push.register(callback);
 
                         AuthService.loginSocial(response.data.name, result.access_token);
+                        $cordovaToast.showLongBottom('Logged with Facebook :)');
                         $ionicHistory.nextViewOptions({
                             disableBack: true
                         });
@@ -142,7 +145,7 @@ angular.module('starter.controllers', [])
         };
     })
 
-    .controller('PushCtrl', function($scope, $ionicPlatform, $cordovaClipboard) {
+    .controller('PushCtrl', function($scope, $ionicPlatform, $cordovaClipboard, $cordovaToast) {
 
         $ionicPlatform.ready(function () {
 
@@ -180,7 +183,9 @@ angular.module('starter.controllers', [])
 
         $scope.toCopy = function () {
             console.log($scope.token);
-            $cordovaClipboard.copy($scope.token);
+            $cordovaClipboard.copy($scope.token).then(function() {
+                $cordovaToast.showLongBottom('Copied Token!');
+            });
         };
     })
 
