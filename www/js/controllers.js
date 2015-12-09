@@ -47,6 +47,9 @@ angular.module('starter.controllers', [])
                     disableBack: true
                 });
                 $state.go('main.dashboard', {}, {reload: true});
+                window.plugins.nativepagetransitions.slide({
+                    'direction': 'left'
+                });
             }, function(err) {
                 var alertPopup = $ionicPopup.alert({
                     title: 'Login failed!',

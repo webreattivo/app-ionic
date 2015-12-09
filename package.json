@@ -1,5 +1,5 @@
 {
-  "name": "ionicTestApp",
+  "name": "giyt",
   "version": "1.1.1",
   "description": "myApp: An Ionic project",
   "dependencies": {
@@ -31,7 +31,11 @@
       "locator": "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git",
       "id": "cordova-plugin-x-toast"
     },
-    "cordova-plugin-inappbrowser"
+    "cordova-plugin-inappbrowser",
+    {
+      "locator": "https://github.com/Telerik-Verified-Plugins/NativePageTransitions#0.5.5",
+      "id": "com.telerik.plugins.nativepagetransitions"
+    }
   ],
   "cordovaPlatforms": [
     "ios",

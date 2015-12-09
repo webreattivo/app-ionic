@@ -8,6 +8,7 @@
   "dependencies": {
     "ng-cordova-oauth": "~0.1.4",
     "angular-mocks": "~1.4.8",
-    "angular-chart.js": "~0.8.6"
+    "angular-chart.js": "~0.8.6",
+    "ionic-native-transitions": "shprink/ionic-native-transitions#~1.0.0-rc5"
   }
 }

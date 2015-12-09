@@ -1,0 +1,24 @@
+{
+  "name": "ionic-native-transitions",
+  "version": "1.0.0-rc5",
+  "description": "Native transitions for Ionic applications",
+  "main": [
+    "dist/ionic-native-transitions.js"
+  ],
+  "authors": [
+    "shprink <contact@julienrenaux.fr>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/shprink/ionic-native-transitions",
+  "private": false,
+  "_release": "1.0.0-rc5",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.0-rc5",
+    "commit": "e814f6db01e665b4125c8bef1f0481fcda8768bc"
+  },
+  "_source": "git://github.com/shprink/ionic-native-transitions.git",
+  "_target": "~1.0.0-rc5",
+  "_originalSource": "shprink/ionic-native-transitions",
+  "_direct": true
+}
