@@ -168,6 +168,15 @@ angular.module('starter', [
                         controller: 'FlashLightCtrl'
                     }
                 }
+            })
+            .state('main.sms', {
+                url: '/sms',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/sms.html',
+                        controller: 'SmsCtrl'
+                    }
+                }
             });
 
         //HOME

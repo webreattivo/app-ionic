@@ -39,6 +39,10 @@
     {
       "locator": "https://github.com/EddyVerbruggen/Flashlight-PhoneGap-Plugin.git",
       "id": "cordova-plugin-flashlight"
+    },
+    {
+      "locator": "https://github.com/cordova-sms/cordova-sms-plugin.git",
+      "id": "com.cordova.plugins.sms"
     }
   ],
   "cordovaPlatforms": [

@@ -111,12 +111,17 @@ angular.module('starter.controllers', [])
         });
     })
 
-    .controller('DashCtrl', function($scope, $state, $http, $ionicPopup, $cordovaVibration, AuthService) {
+    .controller('DashCtrl', function(
+        $scope,
+        $state,
+        $http,
+        $ionicPopup,
+        $cordovaVibration
+    ) {
 
         $scope.vibrate = function() {
             $cordovaVibration.vibrate(1000);
         };
-
 
         $scope.performValidRequest = function() {
             $http.get('http://localhost:8100/valid').then(
@@ -224,6 +229,29 @@ angular.module('starter.controllers', [])
         };
 
 
+    })
+
+    .controller('SmsCtrl', function($scope, $cordovaSms, $cordovaToast) {
+        document.addEventListener("deviceready", function () {
+
+            $scope.sendSms = function(data) {
+
+                var options = {
+                    replaceLineBreaks: false,
+                    android: {
+                        //intent: 'INTENT'  // send SMS with the native android SMS messaging
+                    }
+                };
+
+                $cordovaSms
+                    .send(data.phone, data.message, options)
+                    .then(function() {
+                        $cordovaToast.showLongBottom('SMS was sent :)');
+                    }, function(error) {
+                        // An error occurred
+                    });
+            };
+        });
     })
 
     .controller('UserCtrl', function($scope) {
