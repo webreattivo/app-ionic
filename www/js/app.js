@@ -159,6 +159,15 @@ angular.module('starter', [
                         controller: 'ChartsCtrl'
                     }
                 }
+            })
+            .state('main.flashlight', {
+                url: '/flashlight',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/flashlight.html',
+                        controller: 'FlashLightCtrl'
+                    }
+                }
             });
 
         //HOME

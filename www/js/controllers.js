@@ -200,6 +200,28 @@ angular.module('starter.controllers', [])
             [65, 59, 80, 81, 56, 55, 40],
             [28, 48, 40, 19, 86, 27, 90]
         ];
+    })
+
+    .controller('FlashLightCtrl', function($scope, $cordovaFlashlight, $cordovaToast) {
+
+        var avail = false;
+        $cordovaFlashlight.available().then(function(availability) {
+            avail = availability;
+        });
+
+        $scope.flash = function () {
+
+            if(!avail) {
+                $cordovaToast.showLongBottom('FlashLight Not Available!');
+            }
+
+            $cordovaFlashlight.toggle()
+                .then(function (success) {
+                    /* success */
+                }, function (error) {
+                    $cordovaFlashlight.switchOff();
+                });
+        };
 
 
     })
