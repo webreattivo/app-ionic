@@ -17,6 +17,12 @@ $ ionic state restore
 - Admin Login (user: admin pass: 1 )
 - Restricted area by role
 - Push notification (by [Ionic Push](http://docs.ionic.io/docs/push-overview) )
-- Charts (by [Angular-chart](http://jtblin.github.io/angular-chart.js/)
+- Charts (by [Angular-chart](http://jtblin.github.io/angular-chart.js/) )
+- Native Page Transitions
+- Toast
+- Vibration
+- Clipboard
+- Flashlight 
+
 
 Created by [@WebReattivo](https://twitter.com/WebReattivo)
