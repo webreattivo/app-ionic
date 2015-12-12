@@ -1,23 +1,21 @@
 angular.module('starter.controllers', [])
 
-    .controller('AppCtrl', function (
-        $scope,
-        $rootScope,
-        $state,
-        $ionicPopup,
-        $ionicHistory,
-        AuthService
-    ) {
+    .controller('AppCtrl', function ($scope,
+                                     $rootScope,
+                                     $state,
+                                     $ionicPopup,
+                                     $ionicHistory,
+                                     AuthService) {
 
-        $scope.getUsername = function() {
+        $scope.getUsername = function () {
             return AuthService.getUsername();
         };
 
-        $scope.isAuthenticated = function() {
+        $scope.isAuthenticated = function () {
             return AuthService.isAuthenticated();
         };
 
-        $scope.logout = function() {
+        $scope.logout = function () {
             AuthService.logout();
             $ionicHistory.nextViewOptions({
                 disableBack: true
@@ -26,22 +24,21 @@ angular.module('starter.controllers', [])
         };
     })
 
-    .controller('LoginCtrl', function (
-        $scope,
-        $state,
-        $http,
-        $ionicPlatform,
-        $ionicPopup,
-        $ionicHistory,
-        $cordovaOauth,
-        $cordovaToast,
-        AuthService,
-        FACEBOOK,
-        API_ENDPOINTS,
-        USER_ROLES) {
+    .controller('LoginCtrl', function ($scope,
+                                       $state,
+                                       $http,
+                                       $ionicPlatform,
+                                       $ionicPopup,
+                                       $ionicHistory,
+                                       $cordovaOauth,
+                                       $cordovaToast,
+                                       AuthService,
+                                       FACEBOOK,
+                                       API_ENDPOINTS,
+                                       USER_ROLES) {
 
-        $scope.login = function(data) {
-            AuthService.login(data.username, data.password).then(function(authenticated) {
+        $scope.login = function (data) {
+            AuthService.login(data.username, data.password).then(function (authenticated) {
                 $cordovaToast.showLongBottom('Logged with local system');
                 $ionicHistory.nextViewOptions({
                     disableBack: true
@@ -50,7 +47,7 @@ angular.module('starter.controllers', [])
                 window.plugins.nativepagetransitions.slide({
                     'direction': 'left'
                 });
-            }, function(err) {
+            }, function (err) {
                 var alertPopup = $ionicPopup.alert({
                     title: 'Login failed!',
                     template: 'Please check your credentials!'
@@ -60,11 +57,11 @@ angular.module('starter.controllers', [])
 
         $ionicPlatform.ready(function () {
 
-            $scope.facebookLogin = function() {
-                $cordovaOauth.facebook(FACEBOOK.appId, ["email"]).then(function(result) {
+            $scope.facebookLogin = function () {
+                $cordovaOauth.facebook(FACEBOOK.appId, ["email"]).then(function (result) {
 
                     $http({
-                        url: API_ENDPOINTS.fb+'/me',
+                        url: API_ENDPOINTS.fb + '/me',
                         method: "GET",
                         params: {
                             fields: 'name,email,picture',
@@ -104,32 +101,30 @@ angular.module('starter.controllers', [])
                         console.log(response);
                     });
 
-                }, function(error) {
+                }, function (error) {
                     console.log(error);
                 });
             };
         });
     })
 
-    .controller('DashCtrl', function(
-        $scope,
-        $state,
-        $http,
-        $ionicPopup,
-        $cordovaVibration,
-        $cordovaStatusbar
-    ) {
+    .controller('DashCtrl', function ($scope,
+                                      $state,
+                                      $http,
+                                      $ionicPopup,
+                                      $cordovaVibration,
+                                      $cordovaStatusbar) {
 
         $cordovaStatusbar.styleHex('#886aea');
         $cordovaStatusbar.show();
 
-        $scope.vibrate = function() {
+        $scope.vibrate = function () {
             $cordovaVibration.vibrate(1000);
         };
 
-        $scope.performValidRequest = function() {
+        $scope.performValidRequest = function () {
             $http.get('http://localhost:8100/valid').then(
-                function(result) {
+                function (result) {
                     $scope.response = result;
                     var alertPopup = $ionicPopup.alert({
                         title: 'Valid!',
@@ -138,26 +133,26 @@ angular.module('starter.controllers', [])
                 });
         };
 
-        $scope.performUnauthorizedRequest = function() {
+        $scope.performUnauthorizedRequest = function () {
             $http.get('http://localhost:8100/notauthorized').then(
-                function(result) {
+                function (result) {
                     // No result here..
-                }, function(err) {
+                }, function (err) {
                     $scope.response = err;
                 });
         };
 
-        $scope.performInvalidRequest = function() {
+        $scope.performInvalidRequest = function () {
             $http.get('http://localhost:8100/notauthenticated').then(
-                function(result) {
+                function (result) {
                     // No result here..
-                }, function(err) {
+                }, function (err) {
                     $scope.response = err;
                 });
         };
     })
 
-    .controller('PushCtrl', function($scope, $ionicPlatform, $cordovaClipboard, $cordovaToast) {
+    .controller('PushCtrl', function ($scope, $ionicPlatform, $cordovaClipboard, $cordovaToast) {
 
         $ionicPlatform.ready(function () {
 
@@ -195,13 +190,13 @@ angular.module('starter.controllers', [])
 
         $scope.toCopy = function () {
             console.log($scope.token);
-            $cordovaClipboard.copy($scope.token).then(function() {
+            $cordovaClipboard.copy($scope.token).then(function () {
                 $cordovaToast.showLongBottom('Copied Token!');
             });
         };
     })
 
-    .controller('ChartsCtrl', function($scope) {
+    .controller('ChartsCtrl', function ($scope) {
 
         $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
         $scope.series = ['Series A', 'Series B'];
@@ -211,16 +206,16 @@ angular.module('starter.controllers', [])
         ];
     })
 
-    .controller('FlashLightCtrl', function($scope, $cordovaFlashlight, $cordovaToast) {
+    .controller('FlashLightCtrl', function ($scope, $cordovaFlashlight, $cordovaToast) {
 
         var avail = false;
-        $cordovaFlashlight.available().then(function(availability) {
+        $cordovaFlashlight.available().then(function (availability) {
             avail = availability;
         });
 
         $scope.flash = function () {
 
-            if(!avail) {
+            if (!avail) {
                 $cordovaToast.showLongBottom('FlashLight Not Available!');
             }
 
@@ -235,10 +230,10 @@ angular.module('starter.controllers', [])
 
     })
 
-    .controller('SmsCtrl', function($scope, $cordovaSms, $cordovaToast) {
+    .controller('SmsCtrl', function ($scope, $cordovaSms, $cordovaToast) {
         document.addEventListener("deviceready", function () {
 
-            $scope.sendSms = function(data) {
+            $scope.sendSms = function (data) {
 
                 var options = {
                     replaceLineBreaks: false,
@@ -249,16 +244,16 @@ angular.module('starter.controllers', [])
 
                 $cordovaSms
                     .send(data.phone, data.message, options)
-                    .then(function() {
+                    .then(function () {
                         $cordovaToast.showLongBottom('SMS was sent :)');
-                    }, function(error) {
+                    }, function (error) {
                         $cordovaToast.showLongBottom('SMS not sent');
                     });
             };
         });
     })
 
-    .controller('DeviceCtrl', function($scope, $cordovaDevice) {
+    .controller('DeviceCtrl', function ($scope, $cordovaDevice) {
 
         document.addEventListener("deviceready", function () {
 
@@ -275,7 +270,7 @@ angular.module('starter.controllers', [])
         }, false);
     })
 
-    .controller('ContactsCtrl', function($scope, $ionicPlatform, $cordovaContacts, $cordovaProgress) {
+    .controller('ContactsCtrl', function ($scope, $ionicPlatform, $cordovaContacts, $cordovaProgress) {
 
         $cordovaProgress.showSimple(true);
         $scope.contacts = [];
@@ -285,10 +280,10 @@ angular.module('starter.controllers', [])
             for (var i = 0; i < contacts.length; i++) {
 
                 //check is contact has name and phoneNumber
-                if(contacts[i].displayName && contacts[i].phoneNumbers != null) {
+                if (contacts[i].displayName && contacts[i].phoneNumbers != null) {
 
                     //check image
-                    if(contacts[i].photos != null) {
+                    if (contacts[i].photos != null) {
                         contacts[i].photos = contacts[i].photos[0].value;
                     } else {
                         contacts[i].photos = './img/default-user-image.png';
@@ -313,10 +308,47 @@ angular.module('starter.controllers', [])
         $cordovaContacts.find({}).then(onSuccess, onError);
     })
 
-    .controller('UserCtrl', function($scope) {
+    .controller('GeolocationCtrl', function ($scope, $cordovaGeolocation, $cordovaProgress) {
+
+        $cordovaProgress.showSimple(true);
+        var myLatlng = new google.maps.LatLng(37.3000, -120.4833);
+
+        var mapOptions = {
+            center: myLatlng,
+            zoom: 16,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+        var posOptions = {timeout: 10000, enableHighAccuracy: true};
+        $cordovaGeolocation
+            .getCurrentPosition(posOptions)
+            .then(function (position) {
+                var lat = position.coords.latitude;
+                var long = position.coords.longitude;
+
+                map.setCenter(new google.maps.LatLng(lat, long));
+                map.setZoom(18);
+                var myLocation = new google.maps.Marker({
+                    position: new google.maps.LatLng(lat, long),
+                    map: map,
+                    title: "Me :)"
+                });
+
+                $cordovaProgress.hide();
+
+            }, function (err) {
+                // error
+            });
+
+        $scope.map = map;
+    })
+
+    .controller('UserCtrl', function ($scope) {
 
     })
 
-    .controller('AdminCtrl', function($scope) {
+    .controller('AdminCtrl', function ($scope) {
 
     });

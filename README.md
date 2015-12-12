@@ -26,6 +26,9 @@ or use the apk file in:
 - Vibration
 - Clipboard
 - Flashlight 
+- Contacts
+- Info Device
+- Geolocation
 
 
 Created by [@WebReattivo](https://twitter.com/WebReattivo)

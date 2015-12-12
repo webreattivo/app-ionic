@@ -191,6 +191,16 @@ angular.module('starter', [
                         controller: 'SmsCtrl'
                     }
                 }
+            })
+
+            .state('main.geolocation', {
+                url: '/geolocation',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/geolocation.html',
+                        controller: 'GeolocationCtrl'
+                    }
+                }
             });
 
         //HOME
