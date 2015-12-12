@@ -44,7 +44,8 @@
       "locator": "https://github.com/cordova-sms/cordova-sms-plugin.git",
       "id": "com.cordova.plugins.sms"
     },
-    "cordova-plugin-device"
+    "cordova-plugin-device",
+    "cordova-plugin-statusbar"
   ],
   "cordovaPlatforms": [
     "ios",

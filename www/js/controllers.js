@@ -6,8 +6,8 @@ angular.module('starter.controllers', [])
         $state,
         $ionicPopup,
         $ionicHistory,
-        AuthService,
-        AUTH_EVENTS) {
+        AuthService
+    ) {
 
         $scope.getUsername = function() {
             return AuthService.getUsername();
@@ -116,8 +116,12 @@ angular.module('starter.controllers', [])
         $state,
         $http,
         $ionicPopup,
-        $cordovaVibration
+        $cordovaVibration,
+        $cordovaStatusbar
     ) {
+
+        $cordovaStatusbar.styleHex('#886aea');
+        $cordovaStatusbar.show();
 
         $scope.vibrate = function() {
             $cordovaVibration.vibrate(1000);
@@ -255,6 +259,7 @@ angular.module('starter.controllers', [])
     })
 
     .controller('DeviceCtrl', function($scope, $cordovaDevice) {
+
         document.addEventListener("deviceready", function () {
 
             $scope.device = $cordovaDevice.getDevice();
