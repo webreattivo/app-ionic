@@ -11,6 +11,9 @@ $ cd app-ionic
 $ ionic state restore
 ```
 
+or use the apk file in:
+```app``` folder.
+
 ## Features
 
 - Facebook Login (by [$cordovaOauth](http://ngcordova.com/docs/plugins/oauth/) )
