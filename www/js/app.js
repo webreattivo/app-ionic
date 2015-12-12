@@ -24,11 +24,6 @@ angular.module('starter', [
                 cordova.plugins.Keyboard.disableScroll(true);
 
             }
-
-            if (window.StatusBar) {
-                // org.apache.cordova.statusbar required
-                StatusBar.styleDefault();
-            }
         });
     })
 
@@ -109,6 +104,16 @@ angular.module('starter', [
                     'menuContent': {
                         templateUrl: 'templates/device.html',
                         controller: 'DeviceCtrl'
+                    }
+                }
+            })
+
+            .state('main.contacts', {
+                url: '/contacts',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/contacts.html',
+                        controller: 'ContactsCtrl'
                     }
                 }
             })
@@ -196,9 +201,10 @@ angular.module('starter', [
         });
     })
 
+
     .config(function($ionicNativeTransitionsProvider){
         $ionicNativeTransitionsProvider.setDefaultOptions({
-            duration: 400, // in milliseconds (ms), default 400,
+            duration: 100, // in milliseconds (ms), default 400,
             slowdownfactor: 4, // overlap views (higher number is more) or no overlap (1), default 4
             iosdelay: -1, // ms to wait for the iOS webview to update before animation kicks in, default -1
             androiddelay: -1, // same as above but for Android, default -1

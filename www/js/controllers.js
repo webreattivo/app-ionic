@@ -275,6 +275,44 @@ angular.module('starter.controllers', [])
         }, false);
     })
 
+    .controller('ContactsCtrl', function($scope, $ionicPlatform, $cordovaContacts, $cordovaProgress) {
+
+        $cordovaProgress.showSimple(true);
+        $scope.contacts = [];
+
+        function onSuccess(contacts) {
+
+            for (var i = 0; i < contacts.length; i++) {
+
+                //check is contact has name and phoneNumber
+                if(contacts[i].displayName && contacts[i].phoneNumbers != null) {
+
+                    //check image
+                    if(contacts[i].photos != null) {
+                        contacts[i].photos = contacts[i].photos[0].value;
+                    } else {
+                        contacts[i].photos = './img/default-user-image.png';
+                    }
+
+                    $scope.contacts.push(contacts[i]);
+                }
+            }
+
+            $scope.totalContacts = $scope.contacts.length;
+            console.log($scope.totalContact);
+            console.log($scope.contacts);
+
+            $cordovaProgress.hide();
+        }
+
+        function onError(contactError) {
+            $cordovaProgress.hide();
+            alert(contactError);
+        }
+
+        $cordovaContacts.find({}).then(onSuccess, onError);
+    })
+
     .controller('UserCtrl', function($scope) {
 
     })

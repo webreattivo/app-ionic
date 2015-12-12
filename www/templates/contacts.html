@@ -1,0 +1,22 @@
+<ion-view view-title="Contacts" name="contacts-view">
+    <ion-content class="padding">
+        <div ng-show="totalContacts > 0" style="margin-bottom: 10px;">
+            <h3>Total Contacts: {{totalContacts}}</h3>
+            <div class="list list-inset">
+                <label class="item item-input">
+                    <i class="icon ion-search placeholder-icon"></i>
+                    <input type="text" placeholder="Search Contact Name" ng-model="query">
+                </label>
+            </div>
+        </div>
+        <div class="list">
+            <a ng-repeat="contact in contacts | filter:query" href="tel:{{contact.phoneNumbers[0].value}}"
+               class="item item-thumbnail-left">
+                <img ng-src="{{ contact.photos }}">
+                <h2>{{ contact.displayName }}</h2>
+                <h4>{{ contact.phoneNumbers[0].value }}</h4>
+                <h4 ng-if="contact.emails">{{ contact.emails[0].value }}</h4>
+            </a>
+        </div>
+    </ion-content>
+</ion-view>

@@ -44,8 +44,13 @@
       "locator": "https://github.com/cordova-sms/cordova-sms-plugin.git",
       "id": "com.cordova.plugins.sms"
     },
+    {
+      "locator": "https://github.com/pbernasconi/cordova-progressIndicator.git",
+      "id": "org.pbernasconi.progressindicator"
+    },
     "cordova-plugin-device",
-    "cordova-plugin-statusbar"
+    "cordova-plugin-statusbar",
+    "cordova-plugin-contacts"
   ],
   "cordovaPlatforms": [
     "ios",
