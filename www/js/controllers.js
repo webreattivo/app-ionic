@@ -248,10 +248,26 @@ angular.module('starter.controllers', [])
                     .then(function() {
                         $cordovaToast.showLongBottom('SMS was sent :)');
                     }, function(error) {
-                        // An error occurred
+                        $cordovaToast.showLongBottom('SMS not sent');
                     });
             };
         });
+    })
+
+    .controller('DeviceCtrl', function($scope, $cordovaDevice) {
+        document.addEventListener("deviceready", function () {
+
+            $scope.device = $cordovaDevice.getDevice();
+
+            $scope.model = $cordovaDevice.getModel();
+
+            $scope.platform = $cordovaDevice.getPlatform();
+
+            $scope.uuid = $cordovaDevice.getUUID();
+
+            $scope.version = $cordovaDevice.getVersion();
+
+        }, false);
     })
 
     .controller('UserCtrl', function($scope) {
@@ -259,9 +275,5 @@ angular.module('starter.controllers', [])
     })
 
     .controller('AdminCtrl', function($scope) {
-
-    })
-
-    .controller('TestCtrl', function($scope) {
 
     });

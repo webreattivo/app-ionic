@@ -103,8 +103,17 @@ angular.module('starter', [
                 }
             })
 
+            .state('main.device', {
+                url: '/device',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/device.html',
+                        controller: 'DeviceCtrl'
+                    }
+                }
+            })
+
             .state('main.dashboard', {
-                //cache: false,
                 url: '/dashboard',
                 views: {
                     'menuContent': {
